@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.VisualStudio.JavaScript.Sdk/0.5.128-alpha">
+﻿<Project Sdk="Microsoft.VisualStudio.JavaScript.Sdk/0.5.128-alpha">
   <PropertyGroup>
     <StartupCommand>npm start</StartupCommand>
     <JavaScriptTestFramework>Jasmine</JavaScriptTestFramework>
@@ -8,6 +8,7 @@
     <PublishAssetsDirectory>$(MSBuildProjectDirectory)\dist\datingapp.client\</PublishAssetsDirectory>
   </PropertyGroup>
   <ItemGroup>
+    <Folder Include="src\app\_modules\" />
     <Folder Include="src\app\_models\" />
     <Folder Include="src\app\_services\" />
   </ItemGroup>

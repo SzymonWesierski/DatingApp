@@ -1,26 +1,33 @@
-<header class="p-3 mb-3 border-bottom">
-  <div class="container">
-    <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-
-      <a class="navbar-brand" href="/">Dating App</a>
-
-      <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0" *ngIf="accountService.currentUser$ | async">
-        <li><a href="#" class="nav-link px-2 link-secondary">Matches</a></li>
-        <li><a href="#" class="nav-link px-2 link-body-emphasis">Lists</a></li>
-        <li><a href="#" class="nav-link px-2 link-body-emphasis">Messages</a></li>
+<nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">Dating</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarColor02">
+      <ul class="navbar-nav me-auto">
+        <ng-container *ngIf="accountService.currentUser$ | async">
+          <li class="nav-item"><a routerLink="/members" routerLinkActive="active" class="nav-link px-2 ">Matches</a></li>
+          <li class="nav-item"><a routerLink="/lists" routerLinkActive="active" class="nav-link px-2 ">Lists</a></li>
+          <li class="nav-item"><a routerLink="/messages" routerLinkActive="active" class="nav-link px-2 ">Messages</a></li>
+        </ng-container>
+        <li class="nav-item"><a routerLink="/errors" routerLinkActive="active" class="nav-link px-2 ">Errors test</a></li>
       </ul>
 
-      <form *ngIf="!(accountService.currentUser$ | async)" #loginForm="ngForm" autocomplete="off" (ngSubmit)="login()" class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
-        <input name="username" [(ngModel)]="model.username" type="text" class="form-control" placeholder="Username" >
-        <input name="password" [(ngModel)]="model.password" type="password" class="form-control" placeholder="Password" >
+      <form *ngIf="!(accountService.currentUser$ | async)" #loginForm="ngForm" autocomplete="off" (ngSubmit)="login()" class="d-flex">
+        <input name="username" [(ngModel)]="model.username" type="text" class="form-control me-2" placeholder="Username">
+        <input name="password" [(ngModel)]="model.password" type="password" class="form-control me-2" placeholder="Password">
         <button type="submit" value="Login" class="btn btn-primary">Login</button>
       </form>
 
-      <div class="dropdown text-end" *ngIf="accountService.currentUser$ | async">
-        <a href="#" class="d-block link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-          <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle">
+      <div class="dropdown text-end me-3" *ngIf="(accountService.currentUser$ | async) as user">
+        <a href="#" class="d-flex link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+          <div style="display: flex; align-items: center;">
+            <span class="nav-item" style="margin-right: 10px;">Welcome, {{user.username | titlecase}}</span>
+            <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle">
+          </div>
         </a>
-        <ul class="dropdown-menu text-small" style="">
+        <ul class="dropdown-menu text-small dropdown-menu-end">
           <li><a class="dropdown-item" href="#">New project...</a></li>
           <li><a class="dropdown-item" href="#">Settings</a></li>
           <li><a class="dropdown-item" href="#">Profile</a></li>
@@ -28,6 +35,7 @@
           <li><a class="dropdown-item" (click)="logout()">Sign out</a></li>
         </ul>
       </div>
+
     </div>
   </div>
-</header>
+  </nav>
