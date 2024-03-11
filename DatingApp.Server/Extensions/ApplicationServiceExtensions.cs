@@ -25,6 +25,8 @@ namespace DatingApp.Server.Extensions
 
             services.AddScoped<LogUsersActivity>();
 
+			services.AddScoped<ILikesRepository,LikesRepository>();
+
 			return services;
         }
     }
