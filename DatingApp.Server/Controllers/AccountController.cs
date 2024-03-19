@@ -17,7 +17,8 @@ namespace DatingApp.Server.Controllers
 		private readonly ITokenService _tokenService;
         private readonly IMapper _mapper;
 
-        public AccountController(UserManager<AppUser> userManager, ITokenService tokenService, IMapper mapper)
+        public AccountController(UserManager<AppUser> userManager,
+            ITokenService tokenService, IMapper mapper)
         {
 			_userManager = userManager;
 			_tokenService = tokenService;

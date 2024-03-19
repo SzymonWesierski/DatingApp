@@ -2,6 +2,7 @@ using DatingApp.Server.Data;
 using DatingApp.Server.Entities;
 using DatingApp.Server.Extensions;
 using DatingApp.Server.Middleware;
+using DatingApp.Server.SignalR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -34,12 +35,18 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.UseCors(builder => builder.AllowAnyHeader().AllowAnyMethod().WithOrigins("https://localhost:4200"));
+app.UseCors(builder => builder
+	.AllowAnyHeader()
+	.AllowAnyMethod()
+	.AllowCredentials()
+	.WithOrigins("https://localhost:4200"));
 
 app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+app.MapHub<PresenceHub>("hubs/presence");
+app.MapHub<MessageHub>("hubs/message");
 
 using var scope = app.Services.CreateScope();
 var services = scope.ServiceProvider;
@@ -51,6 +58,7 @@ try
 	var roleManager = services.GetRequiredService<RoleManager<AppRole>>();
 
 	await context.Database.MigrateAsync();
+	await context.Database.ExecuteSqlRawAsync("TRUNCATE TABLE [Connections]");
 
 	await Seed.SeedUsers(userManager, roleManager);
 }

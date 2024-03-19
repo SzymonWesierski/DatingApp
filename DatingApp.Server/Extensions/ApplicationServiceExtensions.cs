@@ -2,6 +2,7 @@ using DatingApp.Server.Data;
 using DatingApp.Server.Helpers;
 using DatingApp.Server.Interfaces;
 using DatingApp.Server.Services;
+using DatingApp.Server.SignalR;
 using Microsoft.EntityFrameworkCore;
 
 namespace DatingApp.Server.Extensions
@@ -16,7 +17,6 @@ namespace DatingApp.Server.Extensions
             });
 
 			services.AddScoped<ITokenService, TokenService>();
-			services.AddScoped<IUserRepository, UserRepository>();
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
@@ -25,8 +25,12 @@ namespace DatingApp.Server.Extensions
 
             services.AddScoped<LogUsersActivity>();
 
-			services.AddScoped<ILikesRepository,LikesRepository>();
-			services.AddScoped<IMessageRepository, MessageRepository>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+            services.AddSignalR();
+
+            services.AddSingleton<PresenceTracker>();
+
 
 			return services;
         }
